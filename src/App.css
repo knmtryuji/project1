@@ -1,0 +1,42 @@
+.App {
+  text-align: center;
+  margin-top: 15rem;
+  background-color: rgb(255, 245, 222);
+}
+
+p {
+  font-size: 1rem;
+  color: #5a3f13;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 1rem;
+  color: #5a3f13;
+}
+
+img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+button {
+  margin-top: 14px;
+  padding: 7px 40px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 1px 5px 10px rgb(133, 114, 73);
+  cursor: pointer;
+  background-color: rgb(254, 249, 238);
+  color: #5a3f13;
+
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+body {
+  background-color: rgb(255, 245, 222);
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+}
