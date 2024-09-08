@@ -1,5 +1,7 @@
 import * as functions from "firebase-functions";
-import { firestore } from "firebase-admin";
+import admin from "firebase-admin";
+const { firestore } = admin;
+admin.initializeApp();
 
 export const onAuth = {
   createdAuthUser: functions.auth.user().onCreate(async (record) => {
