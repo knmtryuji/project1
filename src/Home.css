@@ -1,0 +1,75 @@
+/* .footer {
+  align-items: center;
+  background-color: #edeff1;
+  padding: 20px 20px;
+  display: flex;
+} */
+
+.users {
+  /* align-items: center; */
+  background-color: #b4b4b4;
+  display: flex;
+  border-radius: 0px;
+}
+
+.userInfo {
+  font-weight: 1000;
+  background-color: #b4b4b4;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.signOut {
+  margin: 3px;
+  /* padding: 5px; */
+}
+
+.signOutButton {
+  margin: 5px;
+}
+
+.signInButton {
+  align-items: center;
+  height: 90vh;
+  color: aqua;
+  background-color: rgb(50, 54, 90);
+  justify-content: center;
+  display: flex;
+}
+
+.sendMessage {
+  grid-template-columns: 1fr auto;
+  position: fixed;
+  bottom: 40px;
+  padding: 15px;
+  border-radius: 10px;
+  width: 95%;
+  background-color: #b4b4b4;
+  display: grid;
+  margin-left: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.message {
+  margin: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  height: auto;
+  width: auto;
+  border-radius: 50px;
+  /* box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); */
+  /* width: 10%; */
+  /* background-color: rgb(62, 74, 165); */
+  max-width: 80%;
+  color: aliceblue;
+  text-align: center;
+  overflow-y: auto;
+  display: flex;
+  word-wrap: break-word;
+  flex-direction: column;
+  align-content: space-between;
+}

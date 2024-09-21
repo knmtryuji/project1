@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {}, []);
   return (
     <div className="App">
-      <h1>firebaseでログイン機能を実装</h1>
+      <h1 className="header">firebaseでログイン機能を実装</h1>
       <Home />
     </div>
   );

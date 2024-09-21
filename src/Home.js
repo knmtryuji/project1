@@ -3,6 +3,10 @@ import { auth, provider } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { upsertMessage } from "./firebase/functions";
 import { signInWithPopup } from "firebase/auth";
+import { styled } from "@mui/system";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import "./Home.css";
 
 function Home() {
   const [user] = useAuthState(auth);
@@ -12,8 +16,9 @@ function Home() {
   const sendMessage = async () => {
     console.log("sendMessage");
     const userMessage = { text: input, sender: "user" };
-    setMessages([...messages, userMessage]);
-    await upsertMessage({ text: input });
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+    await upsertMessage(input).catch((err) => console.log(err));
 
     // const botMessage = await botResponse.json();
     // setMessages([
@@ -28,15 +33,20 @@ function Home() {
     <div>
       {user ? (
         <>
-          <UserInfo />
+          <div className="users">
+            <div className="userInfo">
+              <UserInfo />
+            </div>
+            <div className="account">
+              <SignOutButton />
+            </div>
+          </div>
           <Chat
             messages={messages}
             input={input}
             setInput={setInput}
             sendMessage={sendMessage}
           />
-          <div>testです</div>
-          <SignOutButton />
         </>
       ) : (
         <SignInButton />
@@ -49,37 +59,28 @@ export default Home;
 
 // Add Chat component
 function Chat({ messages, input, setInput, sendMessage }) {
+  console.log(messages);
   return (
-    <div>
-      <div>
+    <div className="send">
+      <div className="message">
         {messages.map((msg, index) => (
-          <p key={index} className={msg.sender}>
-            {msg.text}
-          </p>
+          <ChatMessage
+            key={index}
+            message={msg.text}
+            isOwnMessage={msg.sender === "user" ? false : false}
+          />
         ))}
       </div>
-      <input value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
+      <div className="sendMessage">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Send a message..."
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
-  );
-}
-
-function SignInButton() {
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider);
-  };
-  return (
-    <button onClick={signInWithGoogle}>
-      <p>Sign in with Google</p>
-    </button>
-  );
-}
-
-function SignOutButton() {
-  return (
-    <button onClick={() => auth.signOut()}>
-      <p>Sign out</p>
-    </button>
   );
 }
 
@@ -91,3 +92,49 @@ function UserInfo() {
     </div>
   );
 }
+
+function SignInButton() {
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider);
+  };
+  return (
+    <div className="signInButton">
+      <button onClick={signInWithGoogle}>
+        <p className="signIn">Sign in with Google</p>
+      </button>
+    </div>
+  );
+}
+
+function SignOutButton() {
+  return (
+    <div className="signOutButton">
+      <button onClick={() => auth.signOut()}>
+        <p className="signOut">Sign out</p>
+      </button>
+    </div>
+  );
+}
+
+const MessageWrapper = styled("div")(({ theme, isOwnMessage }) => ({
+  display: "flex",
+  justifyContent: isOwnMessage ? "flex-end" : "flex-start",
+  margin: theme.spacing(1, 0),
+}));
+
+const MessageBubble = styled(Paper)(({ isOwnMessage }) => ({
+  maxWidth: "60%",
+  padding: "8px",
+  backgroundColor: isOwnMessage ? "red" : "gray",
+  color: "white",
+  borderRadius: "8px",
+}));
+const ChatMessage = ({ message, isOwnMessage }) => {
+  return (
+    <MessageWrapper isOwnMessage={isOwnMessage}>
+      <MessageBubble elevation={3} isOwnMessage={isOwnMessage}>
+        <Typography variant="body1">{message}</Typography>
+      </MessageBubble>
+    </MessageWrapper>
+  );
+};
